@@ -6,18 +6,18 @@ import numpy as np
 from neurom.core.tree import Tree
 from neurom.core.neuron import make_soma
 from neurom.core.types import NeuriteType
-import neurom.sections as sec
-import neurom.segments as seg
-import neurom.bifurcations as bifs
+import neurom.point_neurite.sections as sec
+import neurom.point_neurite.segments as seg
+import neurom.point_neurite.bifurcations as bifs
+from neurom.point_neurite.features import get as get_feat
 from neurom import iter_neurites
 from neurom.io.utils import load_neuron as _load
 from neurom.analysis.morphtree import set_tree_type as _set_tt
-from neurom.features import get as get_feat
 
 load_neuron = partial(_load, tree_action=_set_tt)
 
 _path = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(_path, '../../../test_data')
+DATA_PATH = os.path.join(_path, '../../../../test_data')
 SWC_PATH = os.path.join(DATA_PATH, 'swc')
 
 NEURON_PATH = os.path.join(SWC_PATH, 'Neuron.swc')

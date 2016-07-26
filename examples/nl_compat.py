@@ -32,7 +32,7 @@ from functools import partial
 import numpy as np
 from neurom.io.utils import load_neuron as _load
 from neurom.analysis.morphtree import set_tree_type as _set_tt
-from neurom.features import get
+from neurom.point_neurite.features import get
 from neurom import log  # pylint: disable=unused-import
 
 

@@ -26,7 +26,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-'''Test neurom.features and neurom.fst features compatibility'''
+'''Test neurom._point_neurite.features and neurom.fst features compatibility'''
 
 import os
 import numpy as np
@@ -39,7 +39,7 @@ from neurom.fst import sectionfunc as _sec
 from neurom.fst import _bifurcationfunc as _bf
 from neurom.core.tree import i_chain2, ibifurcation_point
 from neurom.io.utils import load_neuron
-from neurom.features import get
+from neurom.point_neurite.features import get
 from neurom.analysis import morphtree as mt
 
 

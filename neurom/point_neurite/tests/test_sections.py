@@ -32,8 +32,8 @@ from neurom.io.utils import make_neuron
 from neurom import io
 from neurom.core.tree import Tree, isection
 from neurom import iter_neurites
-from neurom import segments as seg
-from neurom import sections as sec
+from neurom.point_neurite import segments as seg
+from neurom.point_neurite import sections as sec
 
 import math
 from itertools import izip

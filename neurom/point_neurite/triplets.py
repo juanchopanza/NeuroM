@@ -26,68 +26,57 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from nose import tools as nt
-import os
-from neurom.io.utils import make_neuron
-from neurom import io
-from neurom.core.tree import Tree
-from neurom import points as pts
+'''Basic functions and iterators for neuron neurite triplet morphometrics
+
+'''
+import functools
+from . import point_tree as tr
 from neurom import iter_neurites
-
-import math
-from itertools import izip
-
-
-class MockNeuron(object):
-    pass
+from neurom.analysis import morphmath as mm
+from neurom.utils import deprecated_module
 
 
-def _make_tree():
-    '''This tree has 3 branching points'''
-    p = [0.0, 0.0, 0.0, 1.0, 1, 1, 2]
-    T = Tree(p)
-    T1 = T.add_child(Tree([0.0, 1.0, 0.0, 2.0, 1, 1, 2]))
-    T2 = T1.add_child(Tree([0.0, 2.0, 0.0, 3.0, 1, 1, 2]))
-    T3 = T2.add_child(Tree([0.0, 4.0, 0.0, 4.0, 1, 1, 2]))
-    T4 = T3.add_child(Tree([0.0, 5.0, 0.0, 5.0, 1, 1, 2]))
-    T5 = T4.add_child(Tree([2.0, 5.0, 0.0, 6.0, 1, 1, 2]))
-    T6 = T4.add_child(Tree([0.0, 5.0, 2.0, 7.0, 1, 1, 2]))
-    return T
+deprecated_module(__name__)
 
-TREE = _make_tree()
-TREES = [TREE, TREE, TREE]
-NEURON = MockNeuron()
-NEURON.neurites = [TREE]
-POPULATION = MockNeuron()
-POPULATION.neurites = [TREE, TREE, TREE]
-
-def _check_radius0(obj):
-
-    radii = [r for r in iter_neurites(obj, pts.radius)]
-    nt.eq_(radii, [1, 2, 3, 4, 5, 6, 7])
+iter_type = tr.itriplet
 
 
-def _check_radius1(obj):
+def triplet_function(as_tree=False):
+    '''Decorate a triples function such that it can be used in neurite iteration
 
-    radii = [r for r in iter_neurites(obj, pts.radius)]
-    nt.eq_(radii, [1, 2, 3, 4, 5, 6, 7,
-                   1, 2, 3, 4, 5, 6, 7,
-                   1, 2, 3, 4, 5, 6, 7])
+    Parameters:
+        as_tree: specifies whether the function argument is a\
+            triplet of trees or elements
+    '''
+    def _triplet_function(fun):
+        '''Decorate a function with an iteration type member'''
+        @functools.wraps(fun)
+        def _wrapper(triplet):
+            '''Simply pass arguments to wrapped function'''
+            if not as_tree:
+                triplet = (triplet[0].value, triplet[1].value, triplet[2].value)
+            return fun(triplet)
+
+        _wrapper.iter_type = tr.itriplet
+        return _wrapper
+
+    return _triplet_function
 
 
-def _check_count(obj, n):
-    nt.eq_(pts.count(obj), n)
+@triplet_function(as_tree=True)
+def identity(triplet):
+    '''Hack to bind iteration type to do-nothing function'''
+    return triplet
 
 
-def test_radius():
-    _check_radius0(NEURON)
-    _check_radius0(TREE)
-    _check_radius1(TREES)
-    _check_radius1(POPULATION)
+@triplet_function(as_tree=False)
+def meander_angle(triplet):
+    '''Return the angle between a triplet of consecutive points'''
+    return mm.angle_3points(triplet[1], triplet[0], triplet[2])
 
 
-def test_count():
-    _check_count(TREE, 7)
-    _check_count(NEURON, 7)
-    _check_count(POPULATION, 21)
-    _check_count(TREES, 21)
+def count(neuron):
+    """
+    Return number of triplets in neuron or population
+    """
+    return sum(1 for _ in iter_neurites(neuron, identity))

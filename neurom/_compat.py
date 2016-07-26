@@ -29,7 +29,7 @@
 '''Old-style new-style neurite compatibility hacks'''
 
 from itertools import imap, izip
-from neurom import segments as seg
+from neurom.point_neurite import segments as seg
 from neurom import iter_neurites
 from neurom.core.tree import Tree
 from neurom.analysis.morphtree import get_bounding_box

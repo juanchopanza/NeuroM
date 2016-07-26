@@ -32,7 +32,7 @@ from itertools import izip
 import numpy as np
 from neurom import io
 from neurom.io import utils
-from neurom import points as pts
+from neurom.point_neurite import points as pts
 from neurom import iter_neurites
 from neurom.core.dataformat import COLS
 from neurom.core import tree

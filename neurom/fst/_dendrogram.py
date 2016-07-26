@@ -175,7 +175,7 @@ class Dendrogram(object):
 
             max_diameter = _max_diameter(self._obj.root_node)
 
-            dummy_section = Tree(None)
+            dummy_section = Tree()
             dummy_section.add_child(self._obj.root_node)
             self._generate_dendro(dummy_section, (max_diameter, 0.), offsets)
 
@@ -189,7 +189,7 @@ class Dendrogram(object):
 
                 neurite = neurite.root_node
                 max_diameter = _max_diameter(neurite)
-                dummy_section = Tree(None)
+                dummy_section = Tree()
 
                 dummy_section.add_child(neurite)
                 self._generate_dendro(dummy_section, (max_diameter, 0.), offsets)

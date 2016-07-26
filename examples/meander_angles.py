@@ -33,7 +33,7 @@ import numpy as np
 from neurom.core.dataformat import COLS
 from neurom.io.readers import load_data
 from neurom.io.utils import make_neuron
-from neurom import triplets as trip
+from neurom.point_neurite import triplets as trip
 from neurom import iter_neurites
 
 

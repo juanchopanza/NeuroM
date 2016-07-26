@@ -31,7 +31,7 @@ import itertools
 from neurom.core.dataformat import COLS
 from neurom.core.dataformat import POINT_TYPE
 from neurom.core.dataformat import ROOT_ID
-from neurom.core.tree import Tree
+from neurom.point_neurite.point_tree import PointTree
 from neurom.core.neuron import Neuron, make_soma
 from neurom.core.population import Population
 from neurom.exceptions import IDSequenceError, MultipleTrees, MissingParentError
@@ -66,13 +66,13 @@ def make_tree(rdw, root_id=ROOT_ID, post_action=None):
         root_id: ID of the root of the tree to be built.
         post_action: optional function to run on the built tree.
     '''
-    head_node = Tree(rdw.get_row(root_id))
+    head_node = PointTree(rdw.get_row(root_id))
     children = [head_node, ]
     while children:
         cur_node = children.pop()
         for c in rdw.get_children(cur_node.value[COLS.ID]):
             row = rdw.get_row(c)
-            child = Tree(row)
+            child = PointTree(row)
             cur_node.add_child(child)
             children.append(child)
 
