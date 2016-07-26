@@ -30,11 +30,11 @@ from nose import tools as nt
 import os
 from copy import deepcopy
 from neurom.point_neurite.point_tree import PointTree
+from neurom.point_neurite.io.utils import make_neuron
 import neurom.core.tree as tr
 import neurom.point_neurite.point_tree as ptr
 import neurom.point_neurite.treefunc as mtr
 from neurom.core.types import NeuriteType
-from neurom.io.utils import make_neuron
 from neurom.core.soma import make_soma
 from neurom import io
 import numpy as np

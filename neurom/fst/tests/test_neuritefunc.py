@@ -33,7 +33,7 @@ import os
 import numpy as np
 from neurom import fst
 from neurom.fst import _neuritefunc as _nf
-from neurom.io import utils as io_utils
+from neurom.point_neurite.io import utils as io_utils
 from neurom.core import tree as tr
 from neurom.point_neurite import point_tree as ptr
 

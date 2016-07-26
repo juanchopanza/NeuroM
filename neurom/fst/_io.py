@@ -31,11 +31,12 @@
 import os
 from collections import defaultdict
 from functools import partial, update_wrapper
-from neurom.io.swc import SWC
-from neurom.io.neurolucida import NeurolucidaASC
+from neurom.io import swc
+from neurom.io import neurolucida
 from neurom.core.dataformat import POINT_TYPE
 from neurom.core.dataformat import COLS
 from neurom.io import utils as _iout
+from neurom.exceptions import RawDataError
 from ._core import Neuron
 
 
@@ -68,8 +69,11 @@ def _clear_ext(ext):
 
 def load_data(filename):
     '''Unpack data into a raw data wrapper'''
-    ext = os.path.splitext(filename)[1]
-    return _READERS[_clear_ext(ext)](filename)
+    try:
+        ext = os.path.splitext(filename)[1]
+        return _READERS[_clear_ext(ext)](filename)
+    except StandardError:
+        raise RawDataError('Error reading file %s' % filename)
 
 
 def load_neuron(filename):
@@ -171,12 +175,12 @@ def extract_sections(data_block):
 
 def _load_h5(filename):
     '''Delay loading of h5py until it is needed'''
-    from neurom.io.hdf5 import H5
-    return H5.read(filename, remove_duplicates=False, wrapper=SecDataWrapper)
+    from neurom.io import hdf5
+    return hdf5.read(filename, remove_duplicates=False, wrapper=SecDataWrapper)
 
 
 _READERS = {
-    'swc': partial(SWC.read, wrapper=SecDataWrapper),
+    'swc': partial(swc.read, wrapper=SecDataWrapper),
     'h5': _load_h5,
-    'asc': partial(NeurolucidaASC.read, remove_duplicates=False, wrapper=SecDataWrapper)
+    'asc': partial(neurolucida.read, remove_duplicates=False, wrapper=SecDataWrapper)
 }

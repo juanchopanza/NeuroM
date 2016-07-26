@@ -33,7 +33,9 @@ import os
 from neurom.fst import _io
 from neurom.fst import _neuritefunc as _nf
 from neurom.fst import get
+from neurom.exceptions import SomaError, RawDataError
 from neurom.core.tree import ipreorder
+
 
 _path = os.path.dirname(os.path.abspath(__file__))
 DATA_ROOT = os.path.join(_path, '../../../test_data')
@@ -44,10 +46,22 @@ FILENAMES = [os.path.join(DATA_PATH, f)
 NRN_NAMES = ('Neuron', 'Neuron_h5v1', 'Neuron_h5v2')
 
 
+SWC_PATH = os.path.join(DATA_ROOT, 'swc')
+NO_SOMA_FILE = os.path.join(SWC_PATH, 'Single_apical_no_soma.swc')
+
+DISCONNECTED_POINTS_FILE = os.path.join(SWC_PATH, 'Neuron_disconnected_components.swc')
+
+MISSING_PARENTS_FILE = os.path.join(SWC_PATH, 'Neuron_missing_parents.swc')
+
+NON_CONSECUTIVE_ID_FILE = os.path.join(SWC_PATH,
+                                       'non_sequential_trunk_off_1_16pt.swc')
+
+INVALID_ID_SEQUENCE_FILE = os.path.join(SWC_PATH,
+                                        'non_increasing_trunk_off_1_16pt.swc')
 
 def test_load_neuron():
 
-    nrn = _io.load_neuron(FILENAMES[0],)
+    nrn = _io.load_neuron(FILENAMES[0])
     nt.assert_true(isinstance(NRN, _io.Neuron))
     nt.assert_equal(NRN.name, 'Neuron')
 
@@ -95,6 +109,30 @@ def test_load_neuron_soma_only():
     nt.assert_equal(nrn.name, 'Soma_origin')
 
 
+@nt.raises(SomaError)
+def test_load_neuron_no_soma_raises_SomaError():
+    _io.load_neuron(NO_SOMA_FILE)
+
+
+# TODO: decide if we want to check for this in fst.
+@nt.nottest
+@nt.raises(RawDataError)
+def test_load_neuron_disconnected_points_raises():
+    _io.load_neuron(DISCONNECTED_POINTS_FILE)
+
+
+@nt.raises(RawDataError)
+def test_load_neuron_missing_parents_raises():
+    _io.load_neuron(MISSING_PARENTS_FILE)
+
+
+# TODO: decide if we want to check for this in fst.
+@nt.nottest
+@nt.raises(RawDataError)
+def test_load_neuron_invalid_id_sequence_raises():
+    _io.load_neuron(INVALID_ID_SEQUENCE_FILE);
+
+
 def test_load_neurons_directory():
 
     pop = _io.load_neurons(DATA_PATH)
@@ -106,7 +144,7 @@ def test_load_neurons_directory():
 
 
 def test_load_neurons_directory_name():
-    pop = _io.load_neurons(DATA_PATH, 'test123')
+    pop = _io.load_neurons(DATA_PATH, name='test123')
     nt.assert_equal(len(pop.neurons), 5)
     nt.assert_equal(len(pop), 5)
     nt.assert_equal(pop.name, 'test123')
@@ -116,7 +154,7 @@ def test_load_neurons_directory_name():
 
 def test_load_neurons_filenames():
 
-    pop = _io.load_neurons(FILENAMES, 'test123')
+    pop = _io.load_neurons(FILENAMES, name='test123')
     nt.assert_equal(len(pop.neurons), 3)
     nt.assert_equal(pop.name, 'test123')
     for nrn, name in zip(pop.neurons, NRN_NAMES):

@@ -61,23 +61,23 @@ def test_unpack_h5():
 
 
 def test_consistency_between_v1_v2():
-    v1_data = hdf5.H5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
-    v2_data = hdf5.H5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
+    v1_data = hdf5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
+    v2_data = hdf5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
     nt.ok_(np.allclose(v1_data.data_block, v1_data.data_block))
     nt.ok_(v1_data.adj_list == v2_data.adj_list)
 
 
 def test_consistency_between_h5_swc():
-    h5_data = hdf5.H5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
-    swc_data = swc.SWC.read(os.path.join(SWC_PATH, 'Neuron.swc'))
+    h5_data = hdf5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
+    swc_data = swc.read(os.path.join(SWC_PATH, 'Neuron.swc'))
     nt.ok_(np.allclose(h5_data.data_block.shape, swc_data.data_block.shape))
     nt.ok_(len(h5_data.get_fork_points()) == len(swc_data.get_fork_points()))
     nt.ok_(len(h5_data.get_end_points()) == len(swc_data.get_end_points()))
 
 
 def test_removed_duplicates():
-    v1_data = hdf5.H5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
-    v2_data = hdf5.H5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
+    v1_data = hdf5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
+    v2_data = hdf5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
 
     for i in v1_data.get_fork_points()[1:]:
         for ch in v1_data.get_children(i):
@@ -91,9 +91,9 @@ def test_removed_duplicates():
 
 def test_dont_remove_duplicates():
 
-    v1_data = hdf5.H5.read(
+    v1_data = hdf5.read(
         os.path.join(H5V1_PATH, 'Neuron.h5'), remove_duplicates=False)
-    v2_data = hdf5.H5.read(
+    v2_data = hdf5.read(
         os.path.join(H5V2_PATH, 'Neuron.h5'), remove_duplicates=False)
 
     for i in v1_data.get_fork_points()[1:]:
@@ -170,7 +170,7 @@ class DataWrapper_Neuron(object):
 class TestRawDataWrapper_Neuron_H5V1(DataWrapper_Neuron):
     '''Test HDF5 v1 reading'''
     def setup(self):
-        self.data = hdf5.H5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
+        self.data = hdf5.read(os.path.join(H5V1_PATH, 'Neuron.h5'))
         self.first_id = int(self.data.data_block[0][COLS.ID])
         self.rows = len(self.data.data_block)
 
@@ -178,7 +178,7 @@ class TestRawDataWrapper_Neuron_H5V1(DataWrapper_Neuron):
 class TestRawDataWrapper_Neuron_H5V2(DataWrapper_Neuron):
     '''Test HDF5 v2 reading'''
     def setup(self):
-        self.data = hdf5.H5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
+        self.data = hdf5.read(os.path.join(H5V2_PATH, 'Neuron.h5'))
         self.first_id = int(self.data.data_block[0][COLS.ID])
         self.rows = len(self.data.data_block)
 

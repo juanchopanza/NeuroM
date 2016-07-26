@@ -94,19 +94,13 @@ class SWCRawDataWrapper(RawDataWrapper):
         return super(SWCRawDataWrapper, self).get_row(idx)
 
 
-class SWC(object):
-    '''Read SWC files and unpack into internal raw data block
+(ID, TYPE, X, Y, Z, R, P) = xrange(7)
 
-    Input row format: [ID, TYPE, X, Y, Z, R, PARENT_ID]
-    Internal row format: [X, Y, Z, R, TYPE, ID, PARENT_ID]
-    '''
-    (ID, TYPE, X, Y, Z, R, P) = xrange(7)
 
-    @staticmethod
-    def read(filename, wrapper=SWCRawDataWrapper):
-        '''Read an SWC file and return a tuple of data, format.'''
-        data = np.loadtxt(filename)
-        if len(np.shape(data)) == 1:
-            data = np.reshape(data, (1, -1))
-        data = data[:, [SWC.X, SWC.Y, SWC.Z, SWC.R, SWC.TYPE, SWC.ID, SWC.P]]
-        return wrapper(data, 'SWC', None)
+def read(filename, wrapper=SWCRawDataWrapper):
+    '''Read an SWC file and return a tuple of data, format.'''
+    data = np.loadtxt(filename)
+    if len(np.shape(data)) == 1:
+        data = np.reshape(data, (1, -1))
+    data = data[:, [X, Y, Z, R, TYPE, ID, P]]
+    return wrapper(data, 'SWC', None)

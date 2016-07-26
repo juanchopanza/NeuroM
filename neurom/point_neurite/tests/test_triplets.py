@@ -28,8 +28,8 @@
 
 from nose import tools as nt
 import os
-from neurom.io.utils import make_neuron
 from neurom import io
+from neurom.point_neurite.io.utils import make_neuron
 from neurom.point_neurite.point_tree import PointTree
 from neurom.point_neurite import triplets as trip
 from neurom import iter_neurites

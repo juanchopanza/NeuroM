@@ -27,10 +27,9 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from nose import tools as nt
-from neurom.io.utils import load_neuron as load_pt_neuron
 from neurom import load_neuron
 from neurom import viewer
-from neurom.point_neurite.treefunc import set_tree_type
+from neurom.point_neurite.io.utils import load_neuron as load_pt_neuron
 import os
 from matplotlib import pyplot as plt
 
@@ -44,7 +43,7 @@ DATA_PATH = os.path.join(_PWD, '../../test_data/swc')
 MORPH_FILENAME = os.path.join(DATA_PATH, 'Neuron.swc')
 
 nrn = load_neuron(MORPH_FILENAME)
-pt_nrn = load_pt_neuron(MORPH_FILENAME, set_tree_type)
+pt_nrn = load_pt_neuron(MORPH_FILENAME)
 
 
 def test_draw_neuron():

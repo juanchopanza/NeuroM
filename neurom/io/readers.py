@@ -54,18 +54,18 @@ def load_data(filename):
 
     def read_h5(filename):
         '''Lazy loading of HDF5 reader'''
-        from .hdf5 import H5
-        return H5.read(filename)
+        from . import hdf5
+        return hdf5.read(filename)
 
     def read_swc(filename):
         '''Lazy loading of SWC reader'''
-        from .swc import SWC
-        return SWC.read(filename)
+        from . import swc
+        return swc.read(filename)
 
     def read_neurolucida(filename):
         '''Lazy loading of Neurolucida ASCII reader'''
-        from .neurolucida import NeurolucidaASC
-        return NeurolucidaASC.read(filename)
+        from . import neurolucida
+        return neurolucida.read(filename)
 
     _READERS = {
         'swc': read_swc,

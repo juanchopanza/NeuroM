@@ -34,7 +34,7 @@ from nose import tools as nt
 from neurom.core.types import NeuriteType
 from neurom.core.population import Population
 from neurom import fst
-from neurom.io.utils import load_neuron
+from neurom.point_neurite.io.utils import load_neuron
 from neurom.point_neurite.features import get
 from neurom.point_neurite import treefunc as mt
 

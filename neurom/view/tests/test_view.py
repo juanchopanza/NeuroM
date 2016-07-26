@@ -27,8 +27,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from nose import tools as nt
-from neurom.io.utils import make_neuron
-from neurom.io.utils import load_neuron
+from neurom.point_neurite.io.utils import make_neuron
+from neurom.point_neurite.io.utils import load_neuron
 from neurom import io
 from neurom.view import view
 from neurom.point_neurite.treefunc import set_tree_type

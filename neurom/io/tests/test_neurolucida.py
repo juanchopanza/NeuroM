@@ -218,7 +218,7 @@ def test_read():
         os.close(fd)
         with open(temp_file, 'w') as fd:
             fd.write(MORPH_ASC)
-        rdw = nasc.NeurolucidaASC.read(temp_file, remove_duplicates=False)
+        rdw = nasc.read(temp_file, remove_duplicates=False)
         raw_data = rdw.data_block
 
         eq_(raw_data.shape, (19, 7))

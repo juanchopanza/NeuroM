@@ -11,7 +11,7 @@ import neurom.point_neurite.segments as seg
 import neurom.point_neurite.bifurcations as bifs
 from neurom.point_neurite.features import get as get_feat
 from neurom import iter_neurites
-from neurom.io.utils import load_neuron as _load
+from neurom.point_neurite.io.utils import load_neuron as _load
 from neurom.point_neurite.treefunc import set_tree_type as _set_tt
 
 load_neuron = partial(_load, tree_action=_set_tt)
