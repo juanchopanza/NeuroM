@@ -31,11 +31,11 @@ from neurom.io.utils import make_neuron
 from neurom.io.utils import load_neuron
 from neurom import io
 from neurom.view import view
-from neurom.analysis.morphtree import set_tree_type
+from neurom.point_neurite.treefunc import set_tree_type
 import os
 import numpy as np
 import pylab as plt
-from neurom.core.tree import Tree
+from neurom.point_neurite.point_tree import PointTree
 from neurom.fst import load_neuron as load_fst_neuron
 
 
@@ -138,7 +138,7 @@ def test_dendrogram():
     nt.ok_(np.allclose(ax.get_xlim(), (-11.46075159339, 80.591751611909999)))
 
 def test_one_point_branch_with_diameter():
-    test_tree = Tree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
+    test_tree = PointTree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
     try:
         view.tree(test_tree, diameter=True)
         nt.ok_(True)
@@ -147,7 +147,7 @@ def test_one_point_branch_with_diameter():
 
 
 def test_one_point_branch_without_diameter():
-    test_tree = Tree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
+    test_tree = PointTree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
     try:
         view.tree(test_tree, diameter=False)
         nt.ok_(True)
@@ -155,7 +155,7 @@ def test_one_point_branch_without_diameter():
         nt.ok_(False)
 
 def test_one_point_branch_with_diameter_3d():
-    test_tree = Tree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
+    test_tree = PointTree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
     try:
         view.tree3d(test_tree, diameter=True)
         nt.ok_(True)
@@ -163,7 +163,7 @@ def test_one_point_branch_with_diameter_3d():
         nt.ok_(False)
 
 def test_one_point_branch_without_diameter_3d():
-    test_tree = Tree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
+    test_tree = PointTree(np.array([1., 1., 1., 0.5, 2, 1, 0]))
     try:
         view.tree3d(test_tree, diameter=False)
         nt.ok_(True)

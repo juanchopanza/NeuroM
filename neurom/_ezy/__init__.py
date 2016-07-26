@@ -69,7 +69,7 @@ from ..view.view import neuron3d as _view3d
 from ..io.utils import get_morph_files
 from ..point_neurite.features import get
 from ..io import utils as _io
-from ..analysis.morphtree import set_tree_type as _set_tt
+from ..point_neurite.treefunc import set_tree_type as _set_tt
 from ..utils import deprecated, deprecated_module
 
 

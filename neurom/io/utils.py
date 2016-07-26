@@ -32,7 +32,8 @@ from neurom.core.dataformat import COLS
 from neurom.core.dataformat import POINT_TYPE
 from neurom.core.dataformat import ROOT_ID
 from neurom.point_neurite.point_tree import PointTree
-from neurom.core.neuron import Neuron, make_soma
+from neurom.core.neuron import Neuron
+from neurom.core.soma import make_soma
 from neurom.core.population import Population
 from neurom.exceptions import IDSequenceError, MultipleTrees, MissingParentError
 from . import load_data

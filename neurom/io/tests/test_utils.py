@@ -36,6 +36,7 @@ from neurom.point_neurite import points as pts
 from neurom import iter_neurites
 from neurom.core.dataformat import COLS
 from neurom.core import tree
+from neurom.point_neurite import point_tree as ptree
 from neurom.exceptions import (SomaError, IDSequenceError,
                                MultipleTrees, MissingParentError)
 from nose import tools as nt
@@ -118,7 +119,7 @@ def _check_trees(trees):
         nt.ok_(len(list(tree.iforking_point(t))) == 10)
         nt.ok_(len(list(tree.ipreorder(t))) == 211)
         nt.ok_(len(list(tree.ipostorder(t))) == 211)
-        nt.ok_(len(list(tree.isegment(t))) == 210)
+        nt.ok_(len(list(ptree.isegment(t))) == 210)
         leaves = [l for l in tree.ileaf(t)]
         # path length from each leaf to root node.
         branch_order = [21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 111]

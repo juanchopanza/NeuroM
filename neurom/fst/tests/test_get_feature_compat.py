@@ -36,7 +36,7 @@ from neurom.core.population import Population
 from neurom import fst
 from neurom.io.utils import load_neuron
 from neurom.point_neurite.features import get
-from neurom.analysis import morphtree as mt
+from neurom.point_neurite import treefunc as mt
 
 
 _PWD = os.path.dirname(os.path.abspath(__file__))

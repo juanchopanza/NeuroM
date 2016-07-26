@@ -30,7 +30,7 @@ from nose import tools as nt
 import os
 from neurom.io.utils import make_neuron
 from neurom import io
-from neurom.core.tree import Tree
+from neurom.point_neurite.point_tree import PointTree
 from neurom.point_neurite import points as pts
 from neurom import iter_neurites
 
@@ -45,13 +45,13 @@ class MockNeuron(object):
 def _make_tree():
     '''This tree has 3 branching points'''
     p = [0.0, 0.0, 0.0, 1.0, 1, 1, 2]
-    T = Tree(p)
-    T1 = T.add_child(Tree([0.0, 1.0, 0.0, 2.0, 1, 1, 2]))
-    T2 = T1.add_child(Tree([0.0, 2.0, 0.0, 3.0, 1, 1, 2]))
-    T3 = T2.add_child(Tree([0.0, 4.0, 0.0, 4.0, 1, 1, 2]))
-    T4 = T3.add_child(Tree([0.0, 5.0, 0.0, 5.0, 1, 1, 2]))
-    T5 = T4.add_child(Tree([2.0, 5.0, 0.0, 6.0, 1, 1, 2]))
-    T6 = T4.add_child(Tree([0.0, 5.0, 2.0, 7.0, 1, 1, 2]))
+    T = PointTree(p)
+    T1 = T.add_child(PointTree([0.0, 1.0, 0.0, 2.0, 1, 1, 2]))
+    T2 = T1.add_child(PointTree([0.0, 2.0, 0.0, 3.0, 1, 1, 2]))
+    T3 = T2.add_child(PointTree([0.0, 4.0, 0.0, 4.0, 1, 1, 2]))
+    T4 = T3.add_child(PointTree([0.0, 5.0, 0.0, 5.0, 1, 1, 2]))
+    T5 = T4.add_child(PointTree([2.0, 5.0, 0.0, 6.0, 1, 1, 2]))
+    T6 = T4.add_child(PointTree([0.0, 5.0, 2.0, 7.0, 1, 1, 2]))
     return T
 
 TREE = _make_tree()

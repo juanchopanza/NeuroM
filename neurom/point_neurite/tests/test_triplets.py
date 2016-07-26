@@ -30,7 +30,7 @@ from nose import tools as nt
 import os
 from neurom.io.utils import make_neuron
 from neurom import io
-from neurom.core.tree import Tree
+from neurom.point_neurite.point_tree import PointTree
 from neurom.point_neurite import triplets as trip
 from neurom import iter_neurites
 
@@ -51,14 +51,14 @@ tree0   = neuron0.neurites[0]
 
 def _make_simple_tree():
     p = [0.0, 0.0, 0.0, 1.0, 1, 1, 1]
-    T = Tree(p)
-    T1 = T.add_child(Tree([0.0, 2.0, 0.0, 1.0, 1, 1, 1]))
-    T2 = T1.add_child(Tree([2.0, 2.0, 0.0, 1.0, 1, 1, 1]))
-    T3 = T2.add_child(Tree([2.0, 6.0, 0.0, 1.0, 1, 1, 1]))
+    T = PointTree(p)
+    T1 = T.add_child(PointTree([0.0, 2.0, 0.0, 1.0, 1, 1, 1]))
+    T2 = T1.add_child(PointTree([2.0, 2.0, 0.0, 1.0, 1, 1, 1]))
+    T3 = T2.add_child(PointTree([2.0, 6.0, 0.0, 1.0, 1, 1, 1]))
 
-    T5 = T.add_child(Tree([0.0, 0.0, 2.0, 1.0, 1, 1, 1]))
-    T6 = T5.add_child(Tree([2.0, 0.0, 2.0, 1.0, 1, 1, 1]))
-    T7 = T6.add_child(Tree([6.0, 0.0, 2.0, 1.0, 1, 1, 1]))
+    T5 = T.add_child(PointTree([0.0, 0.0, 2.0, 1.0, 1, 1, 1]))
+    T6 = T5.add_child(PointTree([2.0, 0.0, 2.0, 1.0, 1, 1, 1]))
+    T7 = T6.add_child(PointTree([6.0, 0.0, 2.0, 1.0, 1, 1, 1]))
 
     return T
 

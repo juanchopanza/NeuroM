@@ -29,28 +29,31 @@
 from nose import tools as nt
 from copy import deepcopy
 from neurom.core import neuron
-from neurom.core.tree import Tree, val_iter, ipreorder
+from neurom.core.soma import make_soma
+from neurom.core.tree import ipreorder
+from neurom.point_neurite.point_tree import PointTree
+from neurom.point_neurite.point_tree import val_iter
 from itertools import izip
 import numpy as np
 
 SOMA_SINGLE_PTS = [[11, 22, 33, 44, 1, 1, -1]]
 
-TREE = Tree([0.0, 0.0, 0.0, 1.0, 1, 1, 2] )
-T1 = TREE.add_child(Tree([0.0, 1.0, 0.0, 1.0, 1, 1, 2]))
-T2 = T1.add_child(Tree([0.0, 2.0, 0.0, 1.0, 1, 1, 2]))
-T3 = T2.add_child(Tree([0.0, 4.0, 0.0, 2.0, 1, 1, 2]))
-T4 = T3.add_child(Tree([0.0, 5.0, 0.0, 2.0, 1, 1, 2]))
-T5 = T4.add_child(Tree([2.0, 5.0, 0.0, 1.0, 1, 1, 2]))
-T6 = T4.add_child(Tree([0.0, 5.0, 2.0, 1.0, 1, 1, 2]))
-T7 = T5.add_child(Tree([3.0, 5.0, 0.0, 0.75, 1, 1, 2]))
-T8 = T7.add_child(Tree([4.0, 5.0, 0.0, 0.75, 1, 1, 2]))
-T9 = T6.add_child(Tree([0.0, 5.0, 3.0, 0.75, 1, 1, 2]))
-T10 = T9.add_child(Tree([0.0, 6.0, 3.0, 0.75, 1, 1, 2]))
+TREE = PointTree([0.0, 0.0, 0.0, 1.0, 1, 1, 2] )
+T1 = TREE.add_child(PointTree([0.0, 1.0, 0.0, 1.0, 1, 1, 2]))
+T2 = T1.add_child(PointTree([0.0, 2.0, 0.0, 1.0, 1, 1, 2]))
+T3 = T2.add_child(PointTree([0.0, 4.0, 0.0, 2.0, 1, 1, 2]))
+T4 = T3.add_child(PointTree([0.0, 5.0, 0.0, 2.0, 1, 1, 2]))
+T5 = T4.add_child(PointTree([2.0, 5.0, 0.0, 1.0, 1, 1, 2]))
+T6 = T4.add_child(PointTree([0.0, 5.0, 2.0, 1.0, 1, 1, 2]))
+T7 = T5.add_child(PointTree([3.0, 5.0, 0.0, 0.75, 1, 1, 2]))
+T8 = T7.add_child(PointTree([4.0, 5.0, 0.0, 0.75, 1, 1, 2]))
+T9 = T6.add_child(PointTree([0.0, 5.0, 3.0, 0.75, 1, 1, 2]))
+T10 = T9.add_child(PointTree([0.0, 6.0, 3.0, 0.75, 1, 1, 2]))
 
 
 def test_copy():
 
-    soma = neuron.make_soma([[0, 0, 0, 1, 1, 1, -1]])
+    soma = make_soma([[0, 0, 0, 1, 1, 1, -1]])
     nrn1 = neuron.Neuron(soma, [TREE], name="Rabbit of Caerbannog")
     nrn2 = nrn1.copy()
     check_cloned_neuron(nrn1, nrn2)
@@ -58,7 +61,7 @@ def test_copy():
 
 def test_deep_copy():
 
-    soma = neuron.make_soma([[0, 0, 0, 1, 1, 1, -1]])
+    soma = make_soma([[0, 0, 0, 1, 1, 1, -1]])
     nrn1 = neuron.Neuron(soma, [TREE], name="Rabbit of Caerbannog")
     nrn2 = deepcopy(nrn1)
     check_cloned_neuron(nrn1, nrn2)

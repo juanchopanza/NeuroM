@@ -30,9 +30,9 @@
 
 from neurom.core.tree import Tree, ipreorder
 from neurom.core.neuron import Neuron
-from neurom.analysis.morphtree import n_terminations
 from neurom.analysis.morphmath import segment_length
 from neurom.core.dataformat import COLS
+from .treefunc import n_terminations
 
 import numpy as np
 import sys

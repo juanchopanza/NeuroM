@@ -34,7 +34,7 @@ from neurom.core.types import NeuriteType
 from neurom.core.tree import Tree, ipreorder
 from neurom.core.dataformat import POINT_TYPE
 from neurom.core.dataformat import COLS
-from neurom.core.neuron import make_soma
+from neurom.core.soma import make_soma
 
 
 class Section(Tree):

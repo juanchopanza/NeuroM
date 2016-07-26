@@ -27,8 +27,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from nose import tools as nt
-from neurom.core import neuron
-from neurom.core.tree import Tree
+from neurom.core import soma
 from neurom.exceptions import SomaError
 import numpy as np
 import math
@@ -80,39 +79,29 @@ INVALID_PTS_2 = [
     [11, 22, 33, 44, 2, 1, 1]
 ]
 
-TREE = Tree([0.0, 0.0, 0.0, 1.0, 1, 1, 2] )
-T1 = TREE.add_child(Tree([0.0, 1.0, 0.0, 1.0, 1, 1, 2]))
-T2 = T1.add_child(Tree([0.0, 2.0, 0.0, 1.0, 1, 1, 2]))
-T3 = T2.add_child(Tree([0.0, 4.0, 0.0, 2.0, 1, 1, 2]))
-T4 = T3.add_child(Tree([0.0, 5.0, 0.0, 2.0, 1, 1, 2]))
-T5 = T4.add_child(Tree([2.0, 5.0, 0.0, 1.0, 1, 1, 2]))
-T6 = T4.add_child(Tree([0.0, 5.0, 2.0, 1.0, 1, 1, 2]))
-T7 = T5.add_child(Tree([3.0, 5.0, 0.0, 0.75, 1, 1, 2]))
-T8 = T7.add_child(Tree([4.0, 5.0, 0.0, 0.75, 1, 1, 2]))
-T9 = T6.add_child(Tree([0.0, 5.0, 3.0, 0.75, 1, 1, 2]))
-T10 = T9.add_child(Tree([0.0, 6.0, 3.0, 0.75, 1, 1, 2]))
 
 def test_make_Soma_SinglePoint():
-    soma = neuron.make_soma(SOMA_SINGLE_PTS)
-    nt.ok_('SomaSinglePoint' in str(soma))
-    nt.ok_(isinstance(soma, neuron.SomaSinglePoint))
-    nt.assert_items_equal(soma.center, (11, 22, 33))
-    nt.ok_(soma.radius == 44)
+    sm = soma.make_soma(SOMA_SINGLE_PTS)
+    nt.ok_('SomaSinglePoint' in str(sm))
+    nt.ok_(isinstance(sm, soma.SomaSinglePoint))
+    nt.assert_items_equal(sm.center, (11, 22, 33))
+    nt.ok_(sm.radius == 44)
+
 
 def test_make_Soma_ThreePoint():
-    soma = neuron.make_soma(SOMA_THREEPOINTS_PTS)
-    nt.ok_('SomaThreePoint' in str(soma))
-    nt.ok_(isinstance(soma, neuron.SomaThreePoint))
-    nt.assert_items_equal(soma.center, (11, 22, 33))
-    nt.eq_(soma.radius, 0.0)
+    sm = soma.make_soma(SOMA_THREEPOINTS_PTS)
+    nt.ok_('SomaThreePoint' in str(sm))
+    nt.ok_(isinstance(sm, soma.SomaThreePoint))
+    nt.assert_items_equal(sm.center, (11, 22, 33))
+    nt.eq_(sm.radius, 0.0)
 
 
 def check_SomaC(points):
-    soma = neuron.make_soma(points)
-    nt.ok_('SomaSimpleContour' in str(soma))
-    nt.ok_(isinstance(soma, neuron.SomaSimpleContour))
-    np.testing.assert_allclose(soma.center, (0., 0., 0.), atol=1e-16)
-    nt.eq_(soma.radius, 1.0)
+    sm = soma.make_soma(points)
+    nt.ok_('SomaSimpleContour' in str(sm))
+    nt.ok_(isinstance(sm, soma.SomaSimpleContour))
+    np.testing.assert_allclose(sm.center, (0., 0., 0.), atol=1e-16)
+    nt.eq_(sm.radius, 1.0)
 
 
 def test_make_SomaC():
@@ -123,9 +112,9 @@ def test_make_SomaC():
 
 @nt.raises(SomaError)
 def test_invalid_soma_points_0_raises_SomaError():
-    neuron.make_soma(INVALID_PTS_0)
+    soma.make_soma(INVALID_PTS_0)
 
 
 @nt.raises(SomaError)
 def test_invalid_soma_points_2_raises_SomaError():
-    neuron.make_soma(INVALID_PTS_2)
+    soma.make_soma(INVALID_PTS_2)

@@ -40,7 +40,7 @@ from neurom.fst import _bifurcationfunc as _bf
 from neurom.core.tree import i_chain2, ibifurcation_point
 from neurom.io.utils import load_neuron
 from neurom.point_neurite.features import get
-from neurom.analysis import morphtree as mt
+from neurom.point_neurite import treefunc as mt
 
 
 

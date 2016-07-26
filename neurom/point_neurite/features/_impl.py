@@ -33,7 +33,7 @@ from functools import partial
 from .. import point_tree as _tr
 from neurom.core.types import NeuriteType
 from neurom.core.neuron import Neuron
-from neurom.analysis import morphtree as _mt
+from neurom.point_neurite import treefunc as _mt
 from neurom.analysis import morphmath as _mm
 from neurom.core.types import tree_type_checker as _ttc
 from neurom.point_neurite import segments as _seg
@@ -42,7 +42,6 @@ from neurom.point_neurite import bifurcations as _bifs
 from neurom.point_neurite import points as _pts
 from neurom import iter_neurites
 from neurom.analysis.morphmath import sphere_area
-from neurom.analysis.morphtree import trunk_origin_elevation, trunk_origin_azimuth
 
 
 def feature_getter(mapfun):
@@ -261,7 +260,7 @@ def trunk_origin_azimuths(neurons, neurite_type=NeuriteType.all):
     for nrn in neurons:
         for neu in nrn.neurites:
             if _ttc(neurite_type)(neu):
-                yield trunk_origin_azimuth(neu, nrn.soma)
+                yield _mt.trunk_origin_azimuth(neu, nrn.soma)
 
 
 @as_neuron_list
@@ -271,4 +270,4 @@ def trunk_origin_elevations(neurons, neurite_type=NeuriteType.all):
     for nrn in neurons:
         for neu in nrn.neurites:
             if _ttc(neurite_type)(neu):
-                yield trunk_origin_elevation(neu, nrn.soma)
+                yield _mt.trunk_origin_elevation(neu, nrn.soma)
