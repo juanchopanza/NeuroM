@@ -60,7 +60,7 @@ Examples:
 
 '''
 from functools import partial, update_wrapper
-from ..core.neuron import Neuron
+from ..point_neurite.core import Neuron
 from ..core.population import Population
 from ..core.types import NeuriteType, NEURITES as NEURITE_TYPES
 from ..view.view import neuron as _view

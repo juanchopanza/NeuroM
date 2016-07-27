@@ -29,7 +29,7 @@
 '''Dendrogram helper functions and class'''
 
 from neurom.core.tree import Tree, ipreorder
-from neurom.core.neuron import Neuron
+from neurom.point_neurite.core import Neuron
 from neurom.analysis.morphmath import segment_length
 from neurom.core.dataformat import COLS
 from .treefunc import n_terminations

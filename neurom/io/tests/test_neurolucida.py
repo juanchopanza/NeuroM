@@ -8,7 +8,7 @@ from nose.tools import ok_, eq_
 from mock import patch
 
 import neurom.io as io
-from neurom.io.datawrapper import RawDataWrapper
+from neurom.io.datawrapper import SecDataWrapper
 import neurom.io.neurolucida as nasc
 from neurom.core.dataformat import COLS
 
@@ -232,5 +232,5 @@ def test_read():
 def test_load_neurolucida_ascii():
     f = os.path.join(NEUROLUCIDA_PATH, 'sample.asc')
     ascii = io.load_data(f)
-    ok_(isinstance(ascii, RawDataWrapper))
+    ok_(isinstance(ascii, SecDataWrapper))
     eq_(len(ascii.data_block), 18)

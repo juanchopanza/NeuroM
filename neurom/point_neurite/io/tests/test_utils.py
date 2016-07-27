@@ -26,14 +26,14 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-'''Test neurom.io.utils'''
+'''Test neurom.point_neurite.io.utils'''
 import os
 from itertools import izip
 import numpy as np
 from neurom.point_neurite.io import utils
 from neurom.point_neurite import points as pts
 from neurom.point_neurite import point_tree as ptree
-from neurom import io
+from neurom.point_neurite.io.datawrapper import RawDataWrapper
 from neurom import iter_neurites
 from neurom.core.dataformat import COLS
 from neurom.core import tree
@@ -90,8 +90,8 @@ INIT_IDS = [[4, 215, 426, 637],
             [4]]
 
 
-RAW_DATA = [io.load_data(f) for f in FILES]
-NO_SOMA_RAW_DATA = io.load_data(NO_SOMA_FILE)
+RAW_DATA = [utils.load_data(f) for f in FILES]
+NO_SOMA_RAW_DATA = utils.load_data(NO_SOMA_FILE)
 
 
 class MockNeuron(object):
@@ -176,6 +176,13 @@ def test_load_neuron_deep_neuron():
     '''
     deep_neuron = os.path.join(DATA_PATH, 'h5/v1/deep_neuron.h5')
     utils.load_neuron(deep_neuron)
+
+
+def test_load_neurolucida_ascii():
+    f_ = os.path.join(DATA_PATH, 'neurolucida', 'sample.asc')
+    ascii = utils.load_data(f_)
+    nt.ok_(isinstance(ascii, RawDataWrapper))
+    nt.eq_(len(ascii.data_block), 18)
 
 
 def test_load_trees_good_neuron():

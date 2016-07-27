@@ -32,7 +32,7 @@ from functools import wraps
 from functools import partial
 from .. import point_tree as _tr
 from neurom.core.types import NeuriteType
-from neurom.core.neuron import Neuron
+from neurom.point_neurite.core import Neuron
 from neurom.point_neurite import treefunc as _mt
 from neurom.analysis import morphmath as _mm
 from neurom.core.types import tree_type_checker as _ttc

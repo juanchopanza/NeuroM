@@ -29,7 +29,13 @@
 '''Utility functions and for loading neurons'''
 
 import os
+from functools import partial
 from neurom.core.population import Population
+from neurom.exceptions import RawDataError
+from neurom.io.datawrapper import SecDataWrapper
+from neurom.io import swc
+from neurom.io import neurolucida
+from neurom.fst._core import Neuron
 
 
 def get_morph_files(directory):
@@ -44,8 +50,15 @@ def get_morph_files(directory):
             os.path.splitext(m)[1].lower() in ('.swc', '.h5', '.asc')]
 
 
+def load_neuron(filename):
+    '''Build section trees from an h5 or swc file'''
+    rdw = load_data(filename)
+    name = os.path.splitext(os.path.basename(filename))[0]
+    return Neuron(rdw, name)
+
+
 def load_neurons(neurons,
-                 neuron_loader=None,
+                 neuron_loader=load_neuron,
                  name=None,
                  population_class=Population):
     '''Create a population object from all morphologies in a directory\
@@ -72,3 +85,34 @@ def load_neurons(neurons,
 
     pop = population_class([neuron_loader(f) for f in files], name=name)
     return pop
+
+
+def load_data(filename):
+    '''Unpack data into a raw data wrapper'''
+    def _clear_ext(ext):
+        '''Remove extension separation and make lowercase'''
+        return ext.split(os.path.extsep)[-1].lower()
+
+    try:
+        ext = os.path.splitext(filename)[1]
+        return _READERS[_clear_ext(ext)](filename)
+    except StandardError:
+        raise RawDataError('Error reading file %s' % filename)
+
+
+def _load_h5(filename):
+    '''Delay loading of h5py until it is needed'''
+    from neurom.io import hdf5
+    return hdf5.read(filename,
+                     remove_duplicates=False,
+                     data_wrapper=SecDataWrapper)
+
+
+_READERS = {
+    'swc': partial(swc.read,
+                   data_wrapper=SecDataWrapper),
+    'h5': _load_h5,
+    'asc': partial(neurolucida.read,
+                   remove_duplicates=False,
+                   data_wrapper=SecDataWrapper)
+}

@@ -28,7 +28,7 @@
 
 from nose import tools as nt
 from copy import deepcopy
-from neurom.core import neuron
+from neurom.core.neuron import BaseNeuron
 from neurom.core.soma import make_soma
 from neurom.core.tree import ipreorder
 from neurom.point_neurite.point_tree import PointTree
@@ -51,18 +51,10 @@ T9 = T6.add_child(PointTree([0.0, 5.0, 3.0, 0.75, 1, 1, 2]))
 T10 = T9.add_child(PointTree([0.0, 6.0, 3.0, 0.75, 1, 1, 2]))
 
 
-def test_copy():
-
-    soma = make_soma([[0, 0, 0, 1, 1, 1, -1]])
-    nrn1 = neuron.Neuron(soma, [TREE], name="Rabbit of Caerbannog")
-    nrn2 = nrn1.copy()
-    check_cloned_neuron(nrn1, nrn2)
-
-
 def test_deep_copy():
 
     soma = make_soma([[0, 0, 0, 1, 1, 1, -1]])
-    nrn1 = neuron.Neuron(soma, [TREE], name="Rabbit of Caerbannog")
+    nrn1 = BaseNeuron(soma, [TREE])
     nrn2 = deepcopy(nrn1)
     check_cloned_neuron(nrn1, nrn2)
 

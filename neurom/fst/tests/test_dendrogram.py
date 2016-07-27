@@ -1,9 +1,6 @@
 import os
 import numpy as np
 from nose import tools as nt
-from neurom.core.tree import Tree
-from neurom.core.neuron import Neuron
-from neurom.core.soma import make_soma
 from neurom.core.types import NeuriteType
 import neurom.fst._dendrogram as dm
 from neurom.fst import load_neuron

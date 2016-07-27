@@ -28,12 +28,15 @@
 
 '''Utility functions and classes for building point-tree neurons'''
 import itertools
+from functools import partial
+from neurom.io import load_neurons as _load_neurons
 from neurom.core.dataformat import COLS
 from neurom.core.dataformat import POINT_TYPE
 from neurom.core.dataformat import ROOT_ID
 from neurom.point_neurite.point_tree import PointTree
 from neurom.point_neurite.treefunc import set_tree_type
-from neurom.core.neuron import Neuron
+from neurom.point_neurite.core import Neuron
+from neurom.point_neurite.io.datawrapper import RawDataWrapper
 from neurom.core.soma import make_soma
 from neurom.exceptions import IDSequenceError, MultipleTrees, MissingParentError
 from neurom.check import structural_checks as check
@@ -164,17 +167,22 @@ def load_data(filename):
     def read_h5(filename):
         '''Lazy loading of HDF5 reader'''
         from neurom.io import hdf5
-        return hdf5.read(filename)
+        return hdf5.read(filename,
+                         remove_duplicates=True,
+                         data_wrapper=RawDataWrapper)
 
     def read_swc(filename):
         '''Lazy loading of SWC reader'''
         from neurom.io import swc
-        return swc.read(filename)
+        from .swc import SWCRawDataWrapper
+        return swc.read(filename, data_wrapper=SWCRawDataWrapper)
 
     def read_neurolucida(filename):
         '''Lazy loading of Neurolucida ASCII reader'''
         from neurom.io import neurolucida
-        return neurolucida.read(filename)
+        return neurolucida.read(filename,
+                                remove_duplicates=False,
+                                data_wrapper=RawDataWrapper)
 
     _READERS = {
         'swc': read_swc,
@@ -183,3 +191,6 @@ def load_data(filename):
     }
     extension = os.path.splitext(filename)[1][1:]
     return _READERS[extension.lower()](filename)
+
+
+load_neurons = partial(_load_neurons, neuron_loader=load_neuron)

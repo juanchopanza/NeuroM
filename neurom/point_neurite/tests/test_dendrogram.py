@@ -2,7 +2,7 @@
 import numpy as np
 from nose import tools as nt
 from neurom.point_neurite.point_tree import PointTree
-from neurom.core.neuron import Neuron
+from neurom.point_neurite.core import Neuron
 from neurom.core.soma import make_soma
 from neurom.core.types import NeuriteType
 from neurom.point_neurite.treefunc import set_tree_type

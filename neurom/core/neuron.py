@@ -27,24 +27,11 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 '''Neuron classes and functions'''
-from copy import deepcopy
 
 
-class Neuron(object):
-    '''Toy neuron class for testing ideas'''
-    def __init__(self, soma, neurites, name='Neuron'):
-        '''Construct a Neuron
-
-        Arguments:
-            soma: soma object
-            neurites: iterable of neurite tree structures.
-            name: Optional name for this Neuron.
-        '''
+class BaseNeuron(object):
+    '''Class representing a simple neuron'''
+    def __init__(self, soma=None, neurites=None, sections=None):
         self.soma = soma
         self.neurites = neurites
-        self.name = name
-
-    def copy(self):
-        '''Return a copy of the Neuron object.
-        '''
-        return deepcopy(self)
+        self.sections = sections

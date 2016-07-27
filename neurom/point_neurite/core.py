@@ -26,51 +26,19 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-''' Module for morphology data loading and access
-
-Data is unpacked into a 2-dimensional raw data block:
-
-    [X, Y, Z, R, TYPE, ID, PARENT_ID]
-
-There is one such row per measured point.
-
-Functions to umpack the data and a higher level wrapper are provided. See
-
-* load_data
-'''
-import os
+'''Neuron classes and functions'''
+from neurom.core.neuron import BaseNeuron
 
 
-def load_data(filename):
-    '''Unpack filename and return a RawDataWrapper object containing the data
+class Neuron(BaseNeuron):
+    '''Toy neuron class for testing ideas'''
+    def __init__(self, soma, neurites, name='Neuron'):
+        '''Construct a Neuron
 
-    Determines format from extension. Currently supported:
-
-        * SWC (case-insensitive extension ".swc")
-        * H5 v1 and v2 (case-insensitive extension ".h5"). Attempts to
-          determine the version from the contents of the file
-        * Neurolucida ASCII (case-insensitive extension ".asc")
-    '''
-
-    def read_h5(filename):
-        '''Lazy loading of HDF5 reader'''
-        from . import hdf5
-        return hdf5.read(filename)
-
-    def read_swc(filename):
-        '''Lazy loading of SWC reader'''
-        from . import swc
-        return swc.read(filename)
-
-    def read_neurolucida(filename):
-        '''Lazy loading of Neurolucida ASCII reader'''
-        from . import neurolucida
-        return neurolucida.read(filename)
-
-    _READERS = {
-        'swc': read_swc,
-        'h5': read_h5,
-        'asc': read_neurolucida,
-    }
-    extension = os.path.splitext(filename)[1][1:]
-    return _READERS[extension.lower()](filename)
+        Arguments:
+            soma: soma object
+            neurites: iterable of neurite tree structures.
+            name: Optional name for this Neuron.
+        '''
+        super(Neuron, self).__init__(soma=soma, neurites=neurites)
+        self.name = name

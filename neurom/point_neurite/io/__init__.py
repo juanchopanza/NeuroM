@@ -27,3 +27,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ''' Deprecated module with point-neurite representation code'''
+
+from neurom.core.dataformat import COLS
+from neurom.core.dataformat import ROOT_ID
+from neurom.point_neurite.io.utils import load_data, load_neuron, load_neurons
